@@ -16,7 +16,11 @@ def load_cities_data():
 @app.route('/cities', methods=['GET'])
 def api_city():
     data = load_cities_data()
-    return Response(json.dumps(data),  mimetype='application/json')
+    json_data = json.dumps(data)
+    json_fixed = json_data.replace("'",'PLACEHOLDERCOMILLAS')
+    json_fixed = json_data.replace('"',"'")
+    json_fixed = json_data.replace('PLACEHOLDERCOMILLAS','"')
+    return Response(json_fixed ,  mimetype='application/json')
 
 @app.route('/indicator', methods=['GET'])
 def indicator():
@@ -33,9 +37,13 @@ def indicator():
         print(response_dict.keys())
         timeline.append(document["value"])
     response_dict["timeline"] = timeline
-    print(response_dict)
+    json_data = json.dumps(response_dict)
+    json_fixed = json_data.replace("'",'PLACEHOLDERCOMILLAS')
+    json_fixed = json_data.replace('"',"'")
+    json_fixed = json_data.replace('PLACEHOLDERCOMILLAS','"')
+    json_fixed = json_data.replace("'",'"')
 
-    return Response(json.dumps(response_dict),  mimetype='application/json')
+    return Response(json_fixed,  mimetype='application/json')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
