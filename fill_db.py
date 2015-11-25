@@ -118,6 +118,7 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
     dictionaries = get_data_type(files_data_type,DICTIONARY_STRING)
+    print(dictionaries)
     objective_dictionary = pd.read_csv(DATADIRECTORY + "/" + dictionaries[OBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
     subjective_dictionary = pd.read_csv(DATADIRECTORY + "/" + dictionaries[SUBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
 
@@ -141,6 +142,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         indicator_category = objective_dictionary_row["anillo"]
         category_position = category_position_index[indicator_category]
         current_indicator_data = {"name" : objective_dictionary_row["id"], "type":"objetivo", "description": objective_dictionary_row["Indicador"]}
+        print(current_indicator_data)
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
     responses_by_variable = {}
@@ -198,6 +200,7 @@ def generate_city_data():
         files_data_type =identify_data_type(city_files)
         data_files = get_data_type(files_data_type,DATA_STRING)
 
+        print(data_files)
         objective_data = pd.read_csv(DATADIRECTORY + "/" + data_files[OBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
         subjective_data = pd.read_csv(DATADIRECTORY + "/" + data_files[SUBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
 
