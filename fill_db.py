@@ -104,21 +104,25 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
         yearly_sum = {}
         yearly_data = filtered_data[filtered_data[year_string]==year]
         yearly_responses = {}
-        for i, year_indicator in yearly_data.iterrows():
-            string_choices = year_indicator[variable_name]
-            string_array_choices = string_choices.split(";")
-            for choice in string_array_choices:
-                if choice in yearly_responses:
-                    yearly_responses[choice] = yearly_responses[choice] + 1
-                else:
-                    yearly_responses[choice] = 1
+        try:
+            for i, year_indicator in yearly_data.iterrows():
+                string_choices = year_indicator[variable_name]
+                string_array_choices = string_choices.split(";")
+                for choice in string_array_choices:
+                    if choice in yearly_responses:
+                        yearly_responses[choice] = yearly_responses[choice] + 1
+                    else:
+                        yearly_responses[choice] = 1
 
-        for key in yearly_responses:
-            try:
-                yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
-            except:
-                yearly_sum[key] = str(yearly_responses[key])
-        data_return.append({"year":int(year),"value":str(yearly_sum)})
+            for key in yearly_responses:
+                try:
+                    yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
+                except:
+                    yearly_sum[key] = str(yearly_responses[key])
+            data_return.append({"year":int(year),"value":str(yearly_sum)})
+        except:
+            values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
+            return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
     return data_return
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
