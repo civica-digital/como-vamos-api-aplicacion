@@ -94,7 +94,7 @@ def average_per_year(year_string, variable_name, filtered_data,data_type):
 
 def responses_per_year(year_string, variable_name, filtered_data, responses_variable):
     data_return = []
-    unique_years = Series(filtered_data.values.AÑO()).unique()
+    unique_years = pd.Series(filtered_data.values.AÑO()).unique()
     print(unique_years)
     for year in unique_years:
         try:
