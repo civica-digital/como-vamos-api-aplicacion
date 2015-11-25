@@ -222,9 +222,9 @@ def generate_city_data():
                     else:
                         extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
                         values = responses_per_year("AÑO",variable_name,extracted_data,responses)
-                    return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
                 except:
                         values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
+                return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
                 db.test_cities.insert_one(return_dict)
     return "Success"
 
