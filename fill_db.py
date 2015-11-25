@@ -207,18 +207,15 @@ def generate_city_data():
             for indicator_data in category_data["indicators"]:
                 variable_name = indicator_data["name"]
                 variable_type = indicator_data["type"]
-                try:
-                    if variable_type == "objetivo":
-                        extracted_data = extract_data_columns("ANIO",variable_name,objective_data)
-                        values = average_per_year("ANIO",variable_name,extracted_data,"objective")
-                    elif variable_type == "subjetivo ordinal":
-                        extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
-                        values = average_per_year("AÑO",variable_name,extracted_data,"subjective")
-                    else:
-                        extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
-                        values = responses_per_year("AÑO",variable_name,extracted_data,responses)
-                except:
-                    values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
+                if variable_type == "objetivo":
+                    extracted_data = extract_data_columns("ANIO",variable_name,objective_data)
+                    values = average_per_year("ANIO",variable_name,extracted_data,"objective")
+                elif variable_type == "subjetivo ordinal":
+                    extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
+                    values = average_per_year("AÑO",variable_name,extracted_data,"subjective")
+                else:
+                    extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
+                    values = responses_per_year("AÑO",variable_name,extracted_data,responses)
                 return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
                 db.test_cities.insert_one(return_dict)
     return "Success"

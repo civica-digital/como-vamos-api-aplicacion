@@ -21,9 +21,9 @@ def api_city():
 @app.route('/indicator', methods=['GET'])
 def indicator():
     city_name = request.args.get('city')
-    variable_name = request.args.get('variable')
+    indicator_name = request.args.get('indicator')
     print(city_name)
-    cursor = db.test_cities.find( {"$and": [ { "city": city_name}, { "name": variable_name } ] } )
+    cursor = db.test_cities.find( {"$and": [ { "city": city_name}, { "name": indicator_name } ] } )
     response_dict = {}
     timeline = []
     for document in cursor:
