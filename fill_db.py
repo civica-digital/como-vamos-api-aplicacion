@@ -104,25 +104,21 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
         yearly_sum = {}
         yearly_data = filtered_data[filtered_data[year_string]==year]
         yearly_responses = {}
-        try:
-            for i, year_indicator in yearly_data.iterrows():
-                string_choices = year_indicator[variable_name]
-                string_array_choices = string_choices.split(";")
-                for choice in string_array_choices:
-                    if choice in yearly_responses:
-                        yearly_responses[choice] = yearly_responses[choice] + 1
-                    else:
-                        yearly_responses[choice] = 1
+        for i, year_indicator in yearly_data.iterrows():
+            string_choices = year_indicator[variable_name]
+            string_array_choices = string_choices.split(";")
+            for choice in string_array_choices:
+                if choice in yearly_responses:
+                    yearly_responses[choice] = yearly_responses[choice] + 1
+                else:
+                    yearly_responses[choice] = 1
 
-            for key in yearly_responses:
-                try:
-                    yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
-                except:
-                    yearly_sum[key] = str(yearly_responses[key])
-            data_return.append({"year":int(year),"value":str(yearly_sum)})
-        except:
-            values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
-            return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
+        for key in yearly_responses:
+            try:
+                yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
+            except:
+                yearly_sum[key] = str(yearly_responses[key])
+        data_return.append({"year":int(year),"value":str(yearly_sum)})
     return data_return
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
@@ -216,16 +212,19 @@ def generate_city_data():
             for indicator_data in category_data["indicators"]:
                 variable_name = indicator_data["name"]
                 variable_type = indicator_data["type"]
-                if variable_type == "objetivo":
-                    extracted_data = extract_data_columns("ANIO",variable_name,objective_data)
-                    values = average_per_year("ANIO",variable_name,extracted_data,"objective")
-                elif variable_type == "subjetivo ordinal":
-                    extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
-                    values = average_per_year("AÑO",variable_name,extracted_data,"subjective")
-                else:
-                    extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
-                    values = responses_per_year("AÑO",variable_name,extracted_data,responses)
-                return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
+                try:
+                    if variable_type == "objetivo":
+                        extracted_data = extract_data_columns("ANIO",variable_name,objective_data)
+                        values = average_per_year("ANIO",variable_name,extracted_data,"objective")
+                    elif variable_type == "subjetivo ordinal":
+                        extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
+                        values = average_per_year("AÑO",variable_name,extracted_data,"subjective")
+                    else:
+                        extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
+                        values = responses_per_year("AÑO",variable_name,extracted_data,responses)
+                    return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
+                except:
+                        values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
                 db.test_cities.insert_one(return_dict)
     return "Success"
 
