@@ -140,6 +140,8 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         output_json[-1]["categories"].append({"name" : ring,"indicators" : []})
         category_position_index[ring] = len(output_json[-1]["categories"])-1
 
+    units_per_variable = {}
+    description_per_variable = {}
     ## Filling objective data
     for i, objective_dictionary_row in objective_dictionary.iterrows():
         if objective_dictionary_row["id"]==objective_dictionary_row["Indicador"]: next
@@ -148,19 +150,27 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         current_indicator_data = {"name" : objective_dictionary_row["id"], "type":"objetivo", "description": objective_dictionary_row["Indicador"]}
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
+        units_per_variable[objective_dictionary_row["id"]] = objective_dictionary_row["unidad"]
+        description_per_variable[objective_dictionary_row["id"]] = objective_dictionary_row["Indicador"]
+
+
+    # Filling subjective data
     responses_by_variable = {}
     for i, subjective_dictionary_row in subjective_dictionary.iterrows():
-        if subjective_dictionary_row["variable"]==subjective_dictionary_row["descripcion"]: next
         indicator_category = subjective_dictionary_row["dimension"]
         category_position = category_position_index[indicator_category]
         if subjective_dictionary_row["tipo_respuestas"] == "ordinal":
             data_type = "subjetivo ordinal"
+            units_per_variable[subjective_dictionary_row["variable"]] = "promedio"
         else:
             data_type = "subjetivo categorico"
+            units_per_variable[subjective_dictionary_row["variable"]] = "num. de opiniones"
         current_indicator_data = {"name" : subjective_dictionary_row["variable"], "type":data_type, "description": subjective_dictionary_row["descripcion"]}
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
         clean_response_string = string_cleaner_for_dictionary(subjective_dictionary_row["respuestas"])
+
+        description_per_variable[subjective_dictionary_row["variable"]] = subjective_dictionary_row["descripcion"]
 
         try:
             responses_by_variable[subjective_dictionary_row["variable"]] = json.loads(clean_response_string)
@@ -168,7 +178,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
             responses_by_variable[subjective_dictionary_row["variable"]] = { "0": "NaN"}
 
 
-    return output_json, responses_by_variable
+    return output_json, responses_by_variable, units_per_variable, description_per_variable
 
 def generate_city_data():
     client = MongoClient()
@@ -181,7 +191,7 @@ def generate_city_data():
         print("Cargando Variables de " + city)
         city_files = return_city_files(allcityfiles,city)
         files_data_type =identify_data_type(city_files)
-        output_variable_json, responses = extract_city_variableinfo(files_data_type,output_variable_json,city,responses)
+        output_variable_json, responses,  units, description = extract_city_variableinfo(files_data_type,output_variable_json,city,responses)
 
 
     with open('cities.json', 'w') as fp:
@@ -228,7 +238,19 @@ def generate_city_data():
                         values = responses_per_year("AÑO",variable_name,extracted_data,responses)
                 except:
                         values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
-                return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values}
+                try:
+                    variable_units = units[variable_name]
+                    if variable_units is np.nan:
+                        variable_units = "NaN"
+                except:
+                    variable_units = "NaN"
+                try:
+                    variable_description = description[variable_name]
+                    if variable_description is np.nan:
+                        variable_description = "NaN"
+                except:
+                    variable_description = "NaN"
+                return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values, "units": variable_units, "description":variable_description}
                 db.test_cities.insert_one(return_dict)
     return "Success"
 

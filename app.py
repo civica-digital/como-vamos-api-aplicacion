@@ -49,6 +49,8 @@ def indicator():
         response_dict["name"] = document["name"]
         response_dict["city"] = document["city"]
         response_dict["type"] = document["type"]
+        response_dict["units"] = document["units"]
+        response_dict["description"] = document["description"]
         timeline.append(document["value"])
     timeline_publicar = []
     try:
