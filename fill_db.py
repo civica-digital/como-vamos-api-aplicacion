@@ -7,7 +7,7 @@ import json
 import numpy as np
 from pymongo import MongoClient
 from math import isnan
-import simplejson as json
+import json
 
 
 
@@ -113,7 +113,12 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
                 yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
             except:
                 yearly_sum[key] = str(yearly_responses[key])
-        data_return.append({"year":int(year),"value":str(yearly_sum)})
+
+        response_list = []
+        for key in yearly_sum:
+            response_list.append({"name":key, "value":yearly_sum[key]})
+
+        data_return.append({"year":int(year),"value":response_list})
     return data_return
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
@@ -178,14 +183,18 @@ def generate_city_data():
         files_data_type =identify_data_type(city_files)
         output_variable_json, responses = extract_city_variableinfo(files_data_type,output_variable_json,city,responses)
 
+
     with open('cities.json', 'w') as fp:
         json.dump(output_variable_json, fp)
 
-    with open ("cities.json", "r") as input_file:
-        data=input_file.read().replace('NaN', '"NaN"')
+    with open ("cities.json", "r") as myfile:
+        data=myfile.read()
 
-    with open ("cities.json", "w") as fp:
-        fp.write(data)
+    data = data.replace("NaN", '"NaN"')
+
+    with open ("cities.json", "w") as myfile:
+        myfile.write(data)
+
 
 
     allcityfiles = return_allcityfiles()
