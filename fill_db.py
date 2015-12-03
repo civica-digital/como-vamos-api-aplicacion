@@ -164,7 +164,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
             units_per_variable[subjective_dictionary_row["variable"]] = "promedio"
         else:
             data_type = "subjetivo categorico"
-            units_per_variable[subjective_dictionary_row["variable"]] = "num. de opiniones"
+            units_per_variable[subjective_dictionary_row["variable"]] = "opiniones"
         current_indicator_data = {"name" : subjective_dictionary_row["variable"], "type":data_type, "description": subjective_dictionary_row["descripcion"]}
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
@@ -226,6 +226,7 @@ def generate_city_data():
             for indicator_data in category_data["indicators"]:
                 variable_name = indicator_data["name"]
                 variable_type = indicator_data["type"]
+                variable_description = indicator_data["description"]
                 try:
                     if variable_type == "objetivo":
                         extracted_data = extract_data_columns("ANIO",variable_name,objective_data)
@@ -244,12 +245,7 @@ def generate_city_data():
                         variable_units = "NaN"
                 except:
                     variable_units = "NaN"
-                try:
-                    variable_description = description[variable_name]
-                    if variable_description is np.nan:
-                        variable_description = "NaN"
-                except:
-                    variable_description = "NaN"
+
                 return_dict = {"name":variable_name, "city":city_pretty, "type":variable_type, "value":values, "units": variable_units, "description":variable_description}
                 db.test_cities.insert_one(return_dict)
     return "Success"
