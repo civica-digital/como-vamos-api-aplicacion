@@ -121,6 +121,14 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
         data_return.append({"year":int(year),"value":response_list})
     return data_return
 
+def clean_description(description):
+    description_list = description.split(".")
+    description_clean_join = description
+    if len(description_list) > 1:
+        description_clean = description_list[1:-1]
+        description_clean_join = ". ".join(description_clean).strip()
+    return description_clean_join
+
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
     dictionaries = get_data_type(files_data_type,DICTIONARY_STRING)
     objective_dictionary = pd.read_csv(DATADIRECTORY + "/" + dictionaries[OBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
@@ -165,7 +173,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         else:
             data_type = "subjetivo categorico"
             units_per_variable[subjective_dictionary_row["variable"]] = "opiniones"
-        current_indicator_data = {"name" : subjective_dictionary_row["variable"], "type":data_type, "description": subjective_dictionary_row["descripcion"]}
+        current_indicator_data = {"name" : subjective_dictionary_row["variable"], "type":data_type, "description": clean_description(subjective_dictionary_row["descripcion"])}
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
         clean_response_string = string_cleaner_for_dictionary(subjective_dictionary_row["respuestas"])
