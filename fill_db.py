@@ -226,7 +226,7 @@ def generate_city_data():
         categories_clean = []
         for category in categories:
             category_clean = {}
-            if category["Name"] != "NaN":
+            if category["name"] != "NaN":
                 category_clean["name"] = category["name"]
                 category_clean["indicators"] = category["indicators"]
                 categories_clean.append(category)
