@@ -177,7 +177,6 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
         clean_response_string = string_cleaner_for_dictionary(subjective_dictionary_row["respuestas"])
-        print(clean_response_string)
 
         description_per_variable[subjective_dictionary_row["variable"]] = subjective_dictionary_row["descripcion"]
 
