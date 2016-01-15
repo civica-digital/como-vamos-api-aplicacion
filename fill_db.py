@@ -109,10 +109,11 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
                     yearly_responses[choice] = 1
 
         for key in yearly_responses:
-            try:
-                yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
-            except:
-                yearly_sum[key] = str(yearly_responses[key])
+            #try:
+            print(yearly_responses)
+            yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
+            #except:
+                #yearly_sum[key] = str(yearly_responses[key])
 
         response_list = []
         for key in yearly_sum:
