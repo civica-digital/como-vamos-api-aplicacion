@@ -132,11 +132,11 @@ def clean_description(description):
         description_clean_join = ". ".join(description_list).strip()
     return description_clean_join
 
-def DictListUpdate( lis1, lis2):
-    for aLis1 in lis1:
-        if aLis1 not in lis2:
-            lis2.append(aLis1)
-    return lis2
+def DictListUpdate( dict1, dict2):
+    for key in dict2:
+        if key not in dict1:
+            dict1[key] = dict2[key]
+    return dict1
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
     dictionaries = get_data_type(files_data_type,DICTIONARY_STRING)
