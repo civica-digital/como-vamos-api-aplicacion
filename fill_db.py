@@ -109,11 +109,10 @@ def responses_per_year(year_string, variable_name, filtered_data, responses_vari
                     yearly_responses[choice] = 1
 
         for key in yearly_responses:
-            #try:
-            print([responses_variable[variable_name])
-            yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
-            #except:
-                #yearly_sum[key] = str(yearly_responses[key])
+            try:
+                yearly_sum[responses_variable[variable_name][key]] = str(yearly_responses[key])
+            except:
+                yearly_sum[key] = str(yearly_responses[key])
 
         response_list = []
         for key in yearly_sum:
@@ -178,6 +177,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
 
         clean_response_string = string_cleaner_for_dictionary(subjective_dictionary_row["respuestas"])
+        print(clean_response_string)
 
         description_per_variable[subjective_dictionary_row["variable"]] = subjective_dictionary_row["descripcion"]
 
