@@ -219,7 +219,7 @@ def generate_city_data():
     data = data.replace("NaN", '"NaN"')
     data_load = json.loads(data)
     cities_clean = [data_load]
-    for city in data:
+    for city in data_load:
         city_clean = {}
         categories = city["categories"]
         city_clean["name"] = city["name"]
@@ -235,8 +235,6 @@ def generate_city_data():
 
     with open ("cities.json", "w") as myfile:
         json.dump(cities_clean, myfile)
-
-
 
     allcityfiles = return_allcityfiles()
     for city_dictionary in output_variable_json:
