@@ -125,7 +125,7 @@ def clean_description(description):
     description_list = description.split(".")
     description_clean_join = description
     if len(description_list) > 1:
-        description_list.pop()
+        description_list.pop(0)
         description_clean_join = ". ".join(description_list).strip()
     return description_clean_join
 
