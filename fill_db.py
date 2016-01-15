@@ -217,10 +217,24 @@ def generate_city_data():
         data=myfile.read()
 
     data = data.replace("NaN", '"NaN"')
+    data_load = json.loads(data)
+    cities_clean = [data_load]
+    for city in data:
+        city_clean = {}
+        categories = city["categories"]
+        city_clean["name"] = city["name"]
+        categories_clean = []
+        for category in categories:
+            category_clean = {}
+            if category["Name"] != "NaN":
+                category_clean["name"] = category["name"]
+                category_clean["indicators"] = category["indicators"]
+                categories_clean.append(category)
+        cities_clean.append(city_clean)
 
 
     with open ("cities.json", "w") as myfile:
-        myfile.write(data)
+        json.dump(cities_clean, myfile)
 
 
 
