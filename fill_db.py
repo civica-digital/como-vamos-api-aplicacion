@@ -188,7 +188,8 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         except:
             responses_by_variable[subjective_dictionary_row["variable"]] = { "0": "NaN"}
 
-
+    responses_df = pd.DataFrame(responses_by_variable)
+    responses_df .to_csv("Responses.csv")
     return output_json, responses_by_variable, units_per_variable, description_per_variable
 
 def generate_city_data():
