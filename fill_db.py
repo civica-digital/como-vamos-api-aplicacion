@@ -22,7 +22,7 @@ DATA_STRING = "datos"
 
 #Diccionario provisional de ciudades
 cities = []
-cities_pretty_name = {"bogota":"Bogotá", "cartagena":"Cartagena", "bucaramanga-metropolitana":"Bucaramanga Metropolitana", "cali":"Cali", "ibague": "Ibagué", "manizales": "Manizales", "medellin":"Medellín", "pereira":"Pereira", "valledupar":"Valledupar", "yumbo": "Yumbo"}
+cities_pretty_name = {"barranquilla":"Barranquilla","bogota":"Bogotá", "cartagena":"Cartagena", "bucaramanga-metropolitana":"Bucaramanga Metropolitana", "cali":"Cali", "ibague": "Ibagué", "manizales": "Manizales", "medellin":"Medellín", "pereira":"Pereira", "valledupar":"Valledupar", "yumbo": "Yumbo"}
 #cities_pretty_name = {"bogota":"Bogotá"}
 
 
