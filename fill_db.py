@@ -132,6 +132,12 @@ def clean_description(description):
         description_clean_join = ". ".join(description_list).strip()
     return description_clean_join
 
+def DictListUpdate( lis1, lis2):
+    for aLis1 in lis1:
+        if aLis1 not in lis2:
+            lis2.append(aLis1)
+    return lis2
+
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
     dictionaries = get_data_type(files_data_type,DICTIONARY_STRING)
     objective_dictionary = pd.read_csv(DATADIRECTORY + "/" + dictionaries[OBJECTIVEDATA_STRING],delimiter=",", encoding="utf-8", dtype=np.string_ )
@@ -188,9 +194,10 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
         except:
             responses_by_variable[subjective_dictionary_row["variable"]] = { "0": "NaN"}
 
-    responses_df = pd.DataFrame(responses_by_variable)
+    responses = DictListUpdate(responses_by_variable, responses)
+    responses_df = pd.DataFrame(responses)
     responses_df .to_csv("Responses.csv")
-    return output_json, responses_by_variable, units_per_variable, description_per_variable
+    return output_json, responses, units_per_variable, description_per_variable
 
 def generate_city_data():
     client = MongoClient()
