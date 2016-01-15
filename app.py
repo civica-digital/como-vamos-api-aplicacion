@@ -9,7 +9,7 @@ app = Flask(__name__)
 client = MongoClient()
 db = client.test
 
-geocities = {'Bogotá': {'latitude': 4.3153343, 'longitude': -74.1796036}, 'Bucaramanga Metropolitana': {'latitude': 7.09011, 'longitude': -73.13137}, 'Cali': {'latitude': 3.43401, 'longitude': -76.5264664}, 'Cartagena': {'latitude': 10.4250298, 'longitude': -75.5384064}, 'Ibagué': {'latitude': 4.4350801, 'longitude': -75.2194977}, 'Manizales': {'latitude': 5.06458, 'longitude': -75.5076218}, 'Medellín': {'latitude': 6.24579, 'longitude': -75.5745926}, 'Pereira': {'latitude': 4.8052201, 'longitude': -75.6944427}, 'Valledupar': {'latitude': 10.4665403, 'longitude': -73.2510529}, 'Yumbo': {'latitude': 3.56301, 'longitude': -76.4924316}}
+geocities = {'Bogotá': {'latitude': 4.3153343, 'longitude': -74.1796036}, 'Barranquilla': {'latitude': 10.98381, 'longitude': -74.81802}, 'Bucaramanga Metropolitana': {'latitude': 7.09011, 'longitude': -73.13137}, 'Cali': {'latitude': 3.43401, 'longitude': -76.5264664}, 'Cartagena': {'latitude': 10.4250298, 'longitude': -75.5384064}, 'Ibagué': {'latitude': 4.4350801, 'longitude': -75.2194977}, 'Manizales': {'latitude': 5.06458, 'longitude': -75.5076218}, 'Medellín': {'latitude': 6.24579, 'longitude': -75.5745926}, 'Pereira': {'latitude': 4.8052201, 'longitude': -75.6944427}, 'Valledupar': {'latitude': 10.4665403, 'longitude': -73.2510529}, 'Yumbo': {'latitude': 3.56301, 'longitude': -76.4924316}}
 
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
