@@ -125,8 +125,8 @@ def clean_description(description):
     description_list = description.split(".")
     description_clean_join = description
     if len(description_list) > 1:
-        description_clean = description_list[1:-1]
-        description_clean_join = ". ".join(description_clean).strip()
+        description_list.pop()
+        description_clean_join = ". ".join(description_list).strip()
     return description_clean_join
 
 def extract_city_variableinfo(files_data_type,output_json,city,responses):
