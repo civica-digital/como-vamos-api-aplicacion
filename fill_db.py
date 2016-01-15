@@ -230,6 +230,7 @@ def generate_city_data():
                 category_clean["name"] = category["name"]
                 category_clean["indicators"] = category["indicators"]
                 categories_clean.append(category)
+        city_clean["categories"] = categories_clean
         cities_clean.append(city_clean)
 
 
