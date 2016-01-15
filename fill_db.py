@@ -218,7 +218,7 @@ def generate_city_data():
 
     data = data.replace("NaN", '"NaN"')
     data_load = json.loads(data)
-    cities_clean = [data_load]
+    cities_clean = []
     for city in data_load:
         city_clean = {}
         categories = city["categories"]
@@ -226,7 +226,7 @@ def generate_city_data():
         categories_clean = []
         for category in categories:
             category_clean = {}
-            if category["name"] != "NaN":
+            if category["Name"] != "NaN":
                 category_clean["name"] = category["name"]
                 category_clean["indicators"] = category["indicators"]
                 categories_clean.append(category)

@@ -73,7 +73,7 @@ def indicator():
     json_fixed = json_data.replace('"',"")
     json_fixed = json_data.replace('PLACEHOLDERCOMILLAS','"')
 
-    return Response(json.dumps([response_dict]), mimetype='application/json')
+    return Response(json.dumps(response_dict), mimetype='application/json')
 
 
 @app.route('/cities_with_indicator', methods=['GET'])
