@@ -268,6 +268,9 @@ def generate_city_data():
                         extracted_data = extract_data_columns("AÑO",variable_name,subjective_data)
                         values = responses_per_year("AÑO",variable_name,extracted_data,responses)
                 except:
+                    if variable_type == "objetivo":
+                        values = [{"year":int(2014), "value": "0"}]
+                    else:
                         values = [{"year":int(2014),"value":[{"Caso especial de los datos": "0"}]}]
                 try:
                     variable_units = units[variable_name]

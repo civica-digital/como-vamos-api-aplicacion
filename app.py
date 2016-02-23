@@ -130,6 +130,7 @@ def gen_csv():
             yearly_dict = {}
             if isinstance(level1_value["value"],list) == True:
                 for level2_value in level1_value["value"]:
+
                     indicator_name = city_2 + "_" + document["description"] + "_" + level2_value["name"]
                     yearly_dict[indicator_name] = level2_value["value"]
             else:
@@ -137,7 +138,7 @@ def gen_csv():
                 yearly_dict[indicator_name] = level1_value["value"]
             dict_2[int(level1_value["year"])] = yearly_dict
 
-    timeline_publicar = [dict_1,dict_2]
+    #timeline_publicar = [dict_1,dict_2]
     df1 = pd.DataFrame.from_dict(dict_1, orient="index")
     df2 = pd.DataFrame.from_dict(dict_2, orient="index")
     df_concat = pd.concat([df1, df2], axis=1)
