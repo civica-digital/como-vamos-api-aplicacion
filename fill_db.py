@@ -151,7 +151,7 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
 
     category_position_index = {}
     for ring in rings:
-    	if ring not "Indentificación Base de Datos":
+    	if ring != "Indentificación Base de Datos":
 	        output_json[-1]["categories"].append({"name" : ring,"indicators" : []})
 	        category_position_index[ring] = len(output_json[-1]["categories"])-1
 
