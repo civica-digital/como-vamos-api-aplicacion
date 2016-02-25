@@ -151,8 +151,9 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
 
     category_position_index = {}
     for ring in rings:
-        output_json[-1]["categories"].append({"name" : ring,"indicators" : []})
-        category_position_index[ring] = len(output_json[-1]["categories"])-1
+    	if ring not "Indentificación Base de Datos":
+	        output_json[-1]["categories"].append({"name" : ring,"indicators" : []})
+	        category_position_index[ring] = len(output_json[-1]["categories"])-1
 
     units_per_variable = {}
     description_per_variable = {}
@@ -160,6 +161,8 @@ def extract_city_variableinfo(files_data_type,output_json,city,responses):
     for i, objective_dictionary_row in objective_dictionary.iterrows():
         if objective_dictionary_row["id"]==objective_dictionary_row["Indicador"]: next
         indicator_category = objective_dictionary_row["anillo"]
+        if indicator_category == "Indentificación Base de Datos":
+        	indicator_category = "Extra"
         category_position = category_position_index[indicator_category]
         current_indicator_data = {"name" : objective_dictionary_row["id"], "type":"objetivo", "description": objective_dictionary_row["Indicador"]}
         output_json[-1]["categories"][category_position_index[indicator_category]]["indicators"].append(current_indicator_data)
