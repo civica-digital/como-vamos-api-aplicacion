@@ -1,0 +1,7 @@
+Flask == 0.10.1
+numpy == 1.9.0
+pandas == 0.14.1
+pymongo == 2.9.3
+requests == 2.4.3
+simplejson == 3.6.5
+python_Levenshtein == 0.12.0

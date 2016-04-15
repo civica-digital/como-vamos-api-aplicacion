@@ -94,7 +94,7 @@ def average_per_year(year_string, variable_name, filtered_data,data_type):
 
 def responses_per_year(year_string, variable_name, filtered_data, responses_variable):
     data_return = []
-    unique_years = pd.unique(filtered_data.AÑO.ravel())
+    unique_years = pd.unique(filtered_data['AÑO'].ravel())
     for year in unique_years:
         yearly_sum = {}
         yearly_data = filtered_data[filtered_data[year_string]==year]
